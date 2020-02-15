@@ -1,0 +1,16 @@
+
+using gcc : $(TOOL_SET) : $(NDK_CXX) : -fPIC
+<archiver>$(NDK_AR)
+<ranlib>$(NDK_RANLIB)
+<compileflags>--sysroot=$(NDK)/toolchains/llvm/prebuilt/$(HOST_TAG)/sysroot
+<compileflags>-I$(NDK)/toolchains/llvm/prebuilt/$(HOST_TAG)/sysroot/usr/include/
+<compileflags>-I$(NDK)/toolchains/llvm/prebuilt/$(HOST_TAG)/sysroot/usr/include/$(TOOL_SET)-linux-android/
+
+<compileflags>-DNDEBUG
+<compileflags>-DBOOST_FILESYSTEM_VERSION=3
+<cxxflags>-std=c++17
+<compileflags>-fno-addrsig
+<compileflags>-O2
+<compileflags>-DANDROID
+<compileflags>-D__ANDROID_API__=$(ANDROID_NATIVE_LEVEL)
+;
