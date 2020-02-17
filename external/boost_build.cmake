@@ -78,6 +78,18 @@ else (UNIX)
     set(BOOTSTRAP_SUFFIX .sh)
 endif ()
 
+if (BOOST_USE_STATIC)
+
+if (FFTW_USE_STATIC)
+    set(BOOST_LINK static)
+    set(SHARED_OR_STATIC "STATIC")
+    set(LIB_SUFFIX ${CMAKE_STATIC_LIBRARY_SUFFIX})
+else ()
+    set(BOOST_LINK shared)
+    set(SHARED_OR_STATIC "SHARED")
+    set(LIB_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX})
+endif ()
+
 set(BOOST_BOOTSTRAP_CMD ./bootstrap${BOOTSTRAP_SUFFIX})
 set(BOOST_BUILD_CMD ./b2${B2_SUFFIX} toolset=${CROSS_TOOLSET}
         --prefix=${BOOST_INSTALL_DIR}
@@ -86,7 +98,7 @@ set(BOOST_BUILD_CMD ./b2${B2_SUFFIX} toolset=${CROSS_TOOLSET}
         --without-context
         --without-coroutine
         --without-fiber
-        link=static variant=release runtime-link=shared
+        link=${BOOST_LINK} variant=release runtime-link=shared
         ${ARCH}
         ${TARGET_OS}
         install -j${CPU_COUNT})
@@ -149,14 +161,6 @@ list(APPEND BOOST_COMPONENTS "type_erasure")
 list(APPEND BOOST_COMPONENTS "wave")
 #list(APPEND BOOST_COMPONENTS "python")
 #list(APPEND BOOST_COMPONENTS "mpi")
-
-if (FFTW_USE_STATIC)
-    set(SHARED_OR_STATIC "STATIC")
-    set(LIB_SUFFIX ${CMAKE_STATIC_LIBRARY_SUFFIX})
-else ()
-    set(SHARED_OR_STATIC "SHARED")
-    set(LIB_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX})
-endif ()
 
 foreach (SUBLIB ${BOOST_COMPONENTS})
     set(SUB_TARGET boost_${SUBLIB})
