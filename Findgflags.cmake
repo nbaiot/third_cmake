@@ -13,14 +13,14 @@ endif ()
 find_library(
         GFLAGS_LIB
         NAMES "gflags"
-        PATHS ${GFLAGS_ROOT} "/usr/local" "/usr"
+        PATHS ${GFLAGS_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
 )
 
 find_path(GFLAGS_INCLUDE
         NAMES "gflags/gflags.h"
-        PATHS ${GFLAGS_ROOT} "/usr/local" "/usr"
+        PATHS ${GFLAGS_INSTALL_PATH}
         PATH_SUFFIXES "include"
         NO_DEFAULT_PATH
         )

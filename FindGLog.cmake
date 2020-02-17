@@ -13,14 +13,14 @@ endif ()
 find_library(
         GLOG_LIB
         NAMES "glog"
-        PATHS ${GLOG_ROOT} "/usr/local" "/usr"
+        PATHS ${GLOG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
 )
 
 find_path(GLOG_INCLUDE
         NAMES "glog/logging.h"
-        PATHS ${GLOG_ROOT} "/usr/local" "/usr"
+        PATHS ${GLOG_INSTALL_PATH}
         PATH_SUFFIXES "include"
         NO_DEFAULT_PATH
         )

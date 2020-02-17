@@ -5,8 +5,7 @@ set(FFTW3_SOURCES_DIR ${THIRD_PARTY_PATH}/fftw3)
 set(FFTW3_INSTALL_DIR ${THIRD_PARTY_INSTALL_PATH}/fftw3)
 set(FFTW3_INCLUDE_DIR ${FFTW3_INSTALL_DIR}/include)
 
-#set(FFTW3_URL "http://www.fftw.org/fftw-3.3.8.tar.gz")
-set(FFTW3_URL "http://localhost:8888/fftw-3.3.8.tar.gz")
+set(FFTW3_URL "http://www.fftw.org/fftw-3.3.8.tar.gz")
 
 set(FFTW_HOST)
 set(ENABLE_OP "--enable-threads")

@@ -12,7 +12,7 @@ endif ()
 find_library(
         FFTW_LIB
         NAMES "fftw3"
-        PATHS ${FFTW_ROOT} "/usr/local" "/usr"
+        PATHS ${FFTW_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
 )
@@ -20,15 +20,14 @@ find_library(
 find_library(
         FFTW_THREAD_LIB
         NAMES "fftw3_threads"
-        PATHS ${FFTW_ROOT} "/usr/local" "/usr"
-        PATH_SUFFIXES "lib" "lib64"
+        PATHS ${FFTW3_INSTALL_PATH}
         NO_DEFAULT_PATH
 )
 
 find_library(
         FFTW_FLOAT_LIB
         NAMES "fftw3f"
-        PATHS ${FFTW_ROOT} "/usr/local" "/usr"
+        PATHS ${FFTW_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
 )
@@ -36,14 +35,14 @@ find_library(
 find_library(
         FFTW_THREAD_FLOAT_LIB
         NAMES "fftw3f_threads"
-        PATHS ${FFTW_ROOT} "/usr/local" "/usr"
+        PATHS ${FFTW_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
 )
 
 find_path(FFTW_INCLUDE
         NAMES "fftw3.h"
-        PATHS ${FFTW_ROOT} "/usr/local" "/usr"
+        PATHS ${FFTW_INSTALL_PATH}
         PATH_SUFFIXES "include"
         NO_DEFAULT_PATH
         )
