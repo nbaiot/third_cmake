@@ -18,8 +18,9 @@ if(NOT THIRD_PARTY_PATH)
             "A path setting third party libraries download & build directories.")
     set(THIRD_PARTY_INSTALL_PATH ${THIRD_PARTY_PATH}/install CACHE STRING
             "third party libraries install directory")
-    set(THIRD_PARTY_BUILD_TYPE Release)
 endif()
+
+set(THIRD_PARTY_BUILD_TYPE Release)
 
 message(STATUS "CMAKE_MODULE_PATH: ${CMAKE_MODULE_PATH}")
 message(STATUS "THIRD_PARTY_INSTALL_PATH: ${THIRD_PARTY_INSTALL_PATH}")

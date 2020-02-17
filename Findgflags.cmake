@@ -2,7 +2,7 @@ include(FindPackageHandleStandardArgs)
 
 set(CMAKE_FIND_LIBRARY_SUFFIXES_SAV ${CMAKE_FIND_LIBRARY_SUFFIXES})
 
-if (GLOG_USE_STATIC)
+if (${GFLAGS_USE_STATIC})
     set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_STATIC_LIBRARY_SUFFIX})
     set(SHARED_OR_STATIC "STATIC")
 else ()
@@ -11,26 +11,26 @@ else ()
 endif ()
 
 find_library(
-        GLOG_LIB
-        NAMES "glog"
-        PATHS ${GLOG_ROOT} "/usr/local" "/usr"
+        GFLAGS_LIB
+        NAMES "gflags"
+        PATHS ${GFLAGS_ROOT} "/usr/local" "/usr"
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
 )
 
-find_path(GLOG_INCLUDE
-        NAMES "glog/logging.h"
-        PATHS ${GLOG_ROOT} "/usr/local" "/usr"
+find_path(GFLAGS_INCLUDE
+        NAMES "gflags/gflags.h"
+        PATHS ${GFLAGS_ROOT} "/usr/local" "/usr"
         PATH_SUFFIXES "include"
         NO_DEFAULT_PATH
         )
 
-find_package_handle_standard_args(glog DEFAULT_MSG GLOG_INCLUDE GLOG_LIB)
+find_package_handle_standard_args(gflags DEFAULT_MSG GFLAGS_INCLUDE GFLAGS_LIB)
 
-if (GLOG_FOUND)
-    add_library(glog ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET glog PROPERTY IMPORTED_LOCATION ${GLOG_LIB})
-    include_directories(${GLOG_INCLUDE})
+if (GFLAGS_FOUND)
+    add_library(gflags ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    set_property(TARGET gflags PROPERTY IMPORTED_LOCATION ${GFLAGS_LIB})
+    include_directories(${GFLAGS_INCLUDE})
 endif ()
 
 ### restore
