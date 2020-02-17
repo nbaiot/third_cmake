@@ -2,7 +2,7 @@ include(ExternalProject)
 
 set(GFLAGS_SOURCES_DIR ${THIRD_PARTY_PATH}/gflags)
 set(GFLAGS_INSTALL_DIR ${THIRD_PARTY_INSTALL_PATH}/gflags)
-set(GFLAGS_INCLUDE_DIR "${GFLAGS_INSTALL_DIR}/include" CACHE PATH "gflags include directory." FORCE)
+set(GFLAGS_INCLUDE_DIR ${GFLAGS_INSTALL_DIR}/include)
 
 set(GFLAGS_REPOSITORY "https://github.com/gflags/gflags.git")
 set(GFLAGS_TAG "v2.2.2")

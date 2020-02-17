@@ -13,9 +13,8 @@ message(STATUS "BOOST_URL: ${BOOST_URL}")
 
 ### install config
 set(BOOST_INSTALL_DIR ${THIRD_PARTY_INSTALL_PATH}/boost)
-set(BOOST_INCLUDE_DIR ${BOOST_INSTALL_DIR}/include)
+set(BOOSTS_INCLUDE_DIR ${BOOST_INSTALL_DIR}/include)
 set(BOOST_LIBRARY_DIR ${BOOST_INSTALL_DIR}/lib)
-message(STATUS "BOOST_INSTALL_DIR: ${BOOST_INSTALL_DIR}")
 
 set(BOOST_EXTERNAL_DIR ${THIRD_PARTY_PATH}/boost)
 set(BOOST_DOWNLOAD_DIR ${BOOST_EXTERNAL_DIR}/dist)
@@ -34,7 +33,6 @@ else ()
 endif ()
 
 if (ANDROID)
-    include(cmake/android.cmake)
     if (ARMEABI_V7A)
         set(TOOL_SET "arm")
         set(ARCH "architecture=arm")
@@ -153,9 +151,23 @@ list(APPEND BOOST_COMPONENTS "wave")
 #list(APPEND BOOST_COMPONENTS "python")
 #list(APPEND BOOST_COMPONENTS "mpi")
 
+if (FFTW_USE_STATIC)
+    set(SHARED_OR_STATIC "STATIC")
+    set(LIB_SUFFIX ${CMAKE_STATIC_LIBRARY_SUFFIX})
+else ()
+    set(SHARED_OR_STATIC "SHARED")
+    set(LIB_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX})
+endif ()
+
 foreach (SUBLIB ${BOOST_COMPONENTS})
     set(SUB_TARGET boost_${SUBLIB})
-    add_library(${SUB_TARGET} STATIC IMPORTED GLOBAL)
-    set_property(TARGET ${SUB_TARGET} PROPERTY IMPORTED_LOCATION ${BOOST_LIBRARY_DIR}/lib${SUB_TARGET}${CMAKE_STATIC_LIBRARY_SUFFIX})
+    add_library(${SUB_TARGET} ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    set_property(TARGET ${SUB_TARGET} PROPERTY IMPORTED_LOCATION ${BOOST_LIBRARY_DIR}/lib${SUB_TARGET}${LIB_SUFFIX})
     add_dependencies(${SUB_TARGET} ${BOOST_EXTERNAL})
 endforeach ()
+
+include_directories(${BOOSTS_INCLUDE_DIR})
+
+# restore
+set(SHARED_OR_STATIC)
+set(LIB_SUFFIX)

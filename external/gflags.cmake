@@ -1,6 +1,6 @@
 set(GFLAGS_ROOT ${THIRD_PARTY_INSTALL_PATH}/gflags)
 
-set(GFLAGS_USE_STATIC FALSE)
+set(GFLAGS_USE_STATIC TRUE)
 
 find_package(gflags)
 
