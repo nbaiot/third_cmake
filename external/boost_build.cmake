@@ -4,9 +4,9 @@ include(ProcessorCount)
 ### download config
 set(BOOST_EXTERNAL "extern_boost")
 if (WIN32)
-    set(BOOST_URL "https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.bz2")
-else ()
     set(BOOST_URL "https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.zip")
+else ()
+    set(BOOST_URL "https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.bz2")
 endif ()
 message(STATUS "BOOST_URL: ${BOOST_URL}")
 
@@ -79,8 +79,6 @@ else (UNIX)
 endif ()
 
 if (BOOST_USE_STATIC)
-
-if (FFTW_USE_STATIC)
     set(BOOST_LINK static)
     set(SHARED_OR_STATIC "STATIC")
     set(LIB_SUFFIX ${CMAKE_STATIC_LIBRARY_SUFFIX})
