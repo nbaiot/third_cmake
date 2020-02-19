@@ -5,7 +5,8 @@ set(FFTW3_SOURCES_DIR ${THIRD_PARTY_PATH}/fftw3)
 set(FFTW3_INSTALL_DIR ${THIRD_PARTY_INSTALL_PATH}/fftw3)
 set(FFTW3_INCLUDE_DIR ${FFTW3_INSTALL_DIR}/include)
 
-set(FFTW3_URL "http://www.fftw.org/fftw-3.3.8.tar.gz")
+#set(FFTW3_URL "http://www.fftw.org/fftw-3.3.8.tar.gz")
+set(FFTW3_URL "http://localhost:8888/fftw-3.3.8.tar.gz")
 
 set(FFTW_HOST)
 set(ENABLE_OP "--enable-threads")
@@ -69,7 +70,7 @@ ExternalProject_Add(
         COMMAND ${FFTW_CONFIGURE_CMD}
         BUILD_ALWAYS FALSE
         BUILD_COMMAND
-        COMMAND make -j${CPU_COUNT}
+        COMMAND make CFLAGS=-fPIC -j${CPU_COUNT}
         INSTALL_COMMAND make install
         BUILD_IN_SOURCE 1
 )
@@ -83,26 +84,26 @@ else ()
 endif ()
 
 if (ARMEABI_V7A)
-    set(FFTW3F_LIBRARIE "${FFTW3_INSTALL_DIR}${FFTW_LIB_NAME}${LIB_SUFFIX}" CACHE FILEPATH "FFTW3F_LIBRARIE" FORCE)
+    set(FFTW3F_LIBRARIE "${FFTW3_INSTALL_DIR}/lib/${FFTW_LIB_NAME}${LIB_SUFFIX}" CACHE FILEPATH "FFTW3F_LIBRARIE" FORCE)
     add_library(fftw3f ${SHARED_OR_STATIC} IMPORTED GLOBAL)
     set_property(TARGET fftw3f PROPERTY IMPORTED_LOCATION ${FFTW3F_LIBRARIE})
     add_dependencies(fftw3f extern_fftw3)
 
-    set(FFTW3F_THREAD_LIBRARIE "${FFTW3_INSTALL_DIR}${FFTW_THREAD_LIB_NAME}${LIB_SUFFIX}" CACHE FILEPATH "FFTW3F_THREAD_LIBRARIE" FORCE)
-    add_library(fftw3_threads ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET fftw3_threads PROPERTY IMPORTED_LOCATION ${FFTW3F_THREAD_LIBRARIE})
+    set(FFTW3F_THREAD_LIBRARIE "${FFTW3_INSTALL_DIR}/lib/${FFTW_THREAD_LIB_NAME}${LIB_SUFFIX}" CACHE FILEPATH "FFTW3F_THREAD_LIBRARIE" FORCE)
+    add_library(fftw3_thread ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    set_property(TARGET fftw3_thread PROPERTY IMPORTED_LOCATION ${FFTW3F_THREAD_LIBRARIE})
     add_dependencies(fftw3f_thread extern_fftw3)
     include_directories(${FFTW3_INCLUDE_DIR})
 else ()
-    set(FFTW3_LIBRARIE "${FFTW3_INSTALL_DIR}${FFTW_LIB_NAME}${LIB_SUFFIX}" CACHE FILEPATH "FFTW3_LIBRARIE" FORCE)
+    set(FFTW3_LIBRARIE "${FFTW3_INSTALL_DIR}/lib/${FFTW_LIB_NAME}${LIB_SUFFIX}" CACHE FILEPATH "FFTW3_LIBRARIE" FORCE)
     add_library(fftw3 ${SHARED_OR_STATIC} IMPORTED GLOBAL)
     set_property(TARGET fftw3 PROPERTY IMPORTED_LOCATION ${FFTW3_LIBRARIE})
     add_dependencies(fftw3 extern_fftw3)
 
-    set(FFTW3_THREAD_LIBRARIE "${FFTW3_INSTALL_DIR}${FFTW_THREAD_LIB_NAME}${LIB_SUFFIX}" CACHE FILEPATH "FFTW3_THREAD_LIBRARIE" FORCE)
-    add_library(fftw3_threads ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET fftw3_threads PROPERTY IMPORTED_LOCATION ${FFTW3_THREAD_LIBRARIE})
-    add_dependencies(fftw3_threads extern_fftw3)
+    set(FFTW3_THREAD_LIBRARIE "${FFTW3_INSTALL_DIR}/lib/${FFTW_THREAD_LIB_NAME}${LIB_SUFFIX}" CACHE FILEPATH "FFTW3_THREAD_LIBRARIE" FORCE)
+    add_library(fftw3_thread ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    set_property(TARGET fftw3_thread PROPERTY IMPORTED_LOCATION ${FFTW3_THREAD_LIBRARIE})
+    add_dependencies(fftw3_thread extern_fftw3)
 
     include_directories(${FFTW3_INCLUDE_DIR})
 endif ()
