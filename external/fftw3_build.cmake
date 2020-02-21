@@ -14,15 +14,16 @@ set(ENABLE_OP ${ENABLE_OP} "--enable-shared")
 
 set(FFTW_LIB_NAME libfftw3)
 set(FFTW_THREAD_LIB_NAME libfftw3_threads)
+set(FFTW_BUILD_CFLAGS "-fpic")
 if (ANDROID)
     set(LIBS "LIBS=\"-lc -lgcc\"")
     if (ARMEABI_V7A)
         set(FFTW_HOST armv7a-linux-androideabi)
         set(ENABLE_OP ${ENABLE_OP} "--enable-float")
         set(ENABLE_OP ${ENABLE_OP} "--enable-neon")
-        set(NDK_CFLAGS "-march=armv7-a\ -mfloat-abi=softfp\ -mfpu=neon")
         set(FFTW_LIB_NAME libfftw3f)
         set(FFTW_THREAD_LIB_NAME libfftw3f_threads)
+        set(FFTW_BUILD_CFLAGS "-fpic -march=armv7-a -mfloat-abi=softfp -mfpu=neon")
     elseif (ARM64_V8A)
         set(FFTW_HOST aarch64-linux-android)
     elseif (X86)
@@ -41,7 +42,6 @@ if (ANDROID)
             LD=${NDK_LD}
             RANLIB=${NDK_RANLIB}
             STRIP=${NDK_STRIP}
-            CFLAGS=${NDK_CFLAGS}
             LIBS=-lc\ -lgcc
             --host ${FFTW_HOST}
             --prefix=${FFTW3_INSTALL_DIR}
@@ -70,7 +70,7 @@ ExternalProject_Add(
         COMMAND ${FFTW_CONFIGURE_CMD}
         BUILD_ALWAYS FALSE
         BUILD_COMMAND
-        COMMAND make CFLAGS=-fPIC -j${CPU_COUNT}
+        COMMAND make CFLAGS=${FFTW_BUILD_CFLAGS} -j${CPU_COUNT}
         INSTALL_COMMAND make install
         BUILD_IN_SOURCE 1
 )
@@ -90,8 +90,8 @@ if (ARMEABI_V7A)
     add_dependencies(fftw3f extern_fftw3)
 
     set(FFTW3F_THREAD_LIBRARIE "${FFTW3_INSTALL_DIR}/lib/${FFTW_THREAD_LIB_NAME}${LIB_SUFFIX}" CACHE FILEPATH "FFTW3F_THREAD_LIBRARIE" FORCE)
-    add_library(fftw3_thread ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET fftw3_thread PROPERTY IMPORTED_LOCATION ${FFTW3F_THREAD_LIBRARIE})
+    add_library(fftw3f_thread ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    set_property(TARGET fftw3f_thread PROPERTY IMPORTED_LOCATION ${FFTW3F_THREAD_LIBRARIE})
     add_dependencies(fftw3f_thread extern_fftw3)
     include_directories(${FFTW3_INCLUDE_DIR})
 else ()
