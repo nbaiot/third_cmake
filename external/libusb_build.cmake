@@ -72,7 +72,7 @@ else ()
     set(LIB_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX})
 endif ()
 
-set(LIBUSB_LIBRARIE ${LIBUSB_INSTALL_DIR}/lib/$libusb${LIB_SUFFIX})
+set(LIBUSB_LIBRARIE ${LIBUSB_INSTALL_DIR}/lib/libusb-1.0${LIB_SUFFIX})
 add_library(libusb ${SHARED_OR_STATIC} IMPORTED GLOBAL)
 set_property(TARGET libusb PROPERTY IMPORTED_LOCATION ${LIBUSB_LIBRARIE})
 add_dependencies(libusb extern_libusb)
