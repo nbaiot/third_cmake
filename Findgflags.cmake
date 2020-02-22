@@ -29,7 +29,7 @@ find_package_handle_standard_args(gflags DEFAULT_MSG GFLAGS_LIBRARY GFLAGS_INCLU
 
 if (GFLAGS_FOUND)
     add_library(gflags ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET gflags PROPERTY IMPORTED_LOCATION ${GFLAGS_LIB})
+    set_property(TARGET gflags PROPERTY IMPORTED_LOCATION ${GFLAGS_LIBRARY})
     include_directories(${GFLAGS_INCLUDE})
 endif ()
 

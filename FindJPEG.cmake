@@ -30,7 +30,7 @@ find_package_handle_standard_args(JPEG DEFAULT_MSG JPEG_LIBRARY JPEG_INCLUDE)
 
 if (JPEG_FOUND)
     add_library(jpeg-turbo ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET jpeg-turbo PROPERTY IMPORTED_LOCATION ${LIBUSB_LIB})
+    set_property(TARGET jpeg-turbo PROPERTY IMPORTED_LOCATION ${JPEG_LIBRARY})
     include_directories(${JPEG-TURBO_INCLUDE})
 endif ()
 

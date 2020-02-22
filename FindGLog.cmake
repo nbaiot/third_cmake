@@ -29,7 +29,7 @@ find_package_handle_standard_args(glog DEFAULT_MSG GLOG_LIBRARY GLOG_INCLUDE)
 
 if (GLOG_FOUND)
     add_library(glog ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET glog PROPERTY IMPORTED_LOCATION ${GLOG_LIB})
+    set_property(TARGET glog PROPERTY IMPORTED_LOCATION ${GLOG_LIBRARY})
     include_directories(${GLOG_INCLUDE})
 endif ()
 
