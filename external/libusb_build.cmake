@@ -1,9 +1,7 @@
 INCLUDE(ExternalProject)
-include(ProcessorCount)
 
 set(LIBUSB_SOURCES_DIR ${THIRD_PARTY_PATH}/libusb)
-set(LIBUSB_INSTALL_DIR ${THIRD_PARTY_INSTALL_PATH}/libusb)
-set(LIBUSB_INCLUDE_DIR ${LIBUSB_INSTALL_DIR}/include)
+set(LIBUSB_INCLUDE_DIR ${LIBUSB_INSTALL_PATH}/include)
 
 set(LIBUSB_URL "https://github.com/libusb/libusb/releases/download/v1.0.23/libusb-1.0.23.tar.bz2")
 
@@ -28,12 +26,12 @@ if (APPLE)
             )
     set(LIBUSB_CONFIGURE_CMD
             ./configure
-            --prefix=${LIBUSB_INSTALL_DIR}
+            --prefix=${LIBUSB_INSTALL_PATH}
             #--disable-dependency-tracking
             )
 elseif(ANDROID)
     set(LIBUSB_CONFIGURE_CMD
-            ./configure --prefix=${LIBUSB_INSTALL_DIR}
+            ./configure --prefix=${LIBUSB_INSTALL_PATH}
             CC=${NDK_CC}
             CXX=${NDK_CXX}
             AR=${NDK_AR}
@@ -46,7 +44,7 @@ elseif(ANDROID)
             )
 else()
     set(LIBUSB_CONFIGURE_CMD
-            ./configure --prefix=${LIBUSB_INSTALL_DIR}
+            ./configure --prefix=${LIBUSB_INSTALL_PATH}
             )
 endif()
 
@@ -72,7 +70,7 @@ else ()
     set(LIB_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX})
 endif ()
 
-set(LIBUSB_LIBRARIE ${LIBUSB_INSTALL_DIR}/lib/libusb-1.0${LIB_SUFFIX})
+set(LIBUSB_LIBRARIE ${LIBUSB_INSTALL_PATH}/lib/libusb-1.0${LIB_SUFFIX})
 add_library(libusb ${SHARED_OR_STATIC} IMPORTED GLOBAL)
 set_property(TARGET libusb PROPERTY IMPORTED_LOCATION ${LIBUSB_LIBRARIE})
 add_dependencies(libusb extern_libusb)

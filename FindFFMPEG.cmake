@@ -11,7 +11,7 @@ else ()
 endif ()
 
 find_library(
-        AVCODEC_LIB
+        AVCODEC_LIBRARY
         NAMES "avcodec"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
@@ -26,7 +26,7 @@ find_path(AVCODEC_INCLUDE
         )
 
 find_library(
-        AVDEVICE_LIB
+        AVDEVICE_LIBRARY
         NAMES "avdevice"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
@@ -41,7 +41,7 @@ find_path(AVDEVICE_INCLUDE
         )
 
 find_library(
-        AVFILTER_LIB
+        AVFILTER_LIBRARY
         NAMES "avfilter"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
@@ -56,7 +56,7 @@ find_path(AVFILTER_INCLUDE
         )
 
 find_library(
-        AVFORMAT_LIB
+        AVFORMAT_LIBRARY
         NAMES "avformat"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
@@ -71,7 +71,7 @@ find_path(AVFORMAT_INCLUDE
         )
 
 find_library(
-        AVUTIL_LIB
+        AVUTIL_LIBRARY
         NAMES "avutil"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
@@ -86,7 +86,7 @@ find_path(AVUTIL_INCLUDE
         )
 
 find_library(
-        SWRESAMPLE_LIB
+        SWRESAMPLE_LIBRARY
         NAMES "swresample"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
@@ -101,7 +101,7 @@ find_path(SWRESAMPLE_INCLUDE
         )
 
 find_library(
-        SWSCALE_LIB
+        SWSCALE_LIBRARY
         NAMES "swscale"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
@@ -117,37 +117,37 @@ find_path(SWSCALE_INCLUDE
 
 
 find_package_handle_standard_args(ffmpeg DEFAULT_MSG
-        AVCODEC_LIB AVCODEC_INCLUDE
-        AVDEVICE_LIB AVDEVICE_INCLUDE
-        AVFILTER_LIB AVFILTER_INCLUDE
-        AVFORMAT_LIB AVFORMAT_INCLUDE
-        AVUTIL_LIB AVUTIL_INCLUDE
-        SWRESAMPLE_LIB SWRESAMPLE_INCLUDE
-        SWSCALE_LIB SWSCALE_INCLUDE
+        AVDEVICE_LIBRARY AVDEVICE_INCLUDE
+        AVCODEC_LIBRARY AVCODEC_INCLUDE
+        AVFILTER_LIBRARY AVFILTER_INCLUDE
+        AVFORMAT_LIBRARY AVFORMAT_INCLUDE
+        AVUTIL_LIBRARY AVUTIL_INCLUDE
+        SWRESAMPLE_LIBRARY SWRESAMPLE_INCLUDE
+        SWSCALE_LIBRARY SWSCALE_INCLUDE
         )
 
 if (FFMPEG_FOUND)
     add_library(avcodec ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET avcodec PROPERTY IMPORTED_LOCATION ${AVCODEC_LIB})
+    set_property(TARGET avcodec PROPERTY IMPORTED_LOCATION ${AVCODEC_LIBRARY})
 
     add_library(avdevice ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET avdevice PROPERTY IMPORTED_LOCATION ${AVDEVICE_LIB})
+    set_property(TARGET avdevice PROPERTY IMPORTED_LOCATION ${AVDEVICE_LIBRARY})
 
     add_library(avfilter ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET avfilter PROPERTY IMPORTED_LOCATION ${AVFILTER_LIB})
+    set_property(TARGET avfilter PROPERTY IMPORTED_LOCATION ${AVFILTER_LIBRARY})
 
 
     add_library(avutil ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET avutil PROPERTY IMPORTED_LOCATION ${AVUTIL_LIB})
+    set_property(TARGET avutil PROPERTY IMPORTED_LOCATION ${AVUTIL_LIBRARY})
 
     add_library(avformat ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET avformat PROPERTY IMPORTED_LOCATION ${AVFORMAT_LIB})
+    set_property(TARGET avformat PROPERTY IMPORTED_LOCATION ${AVFORMAT_LIBRARY})
 
     add_library(swresample ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET swresample PROPERTY IMPORTED_LOCATION ${SWRESAMPLE_LIB})
+    set_property(TARGET swresample PROPERTY IMPORTED_LOCATION ${SWRESAMPLE_LIBRARY})
 
     add_library(swscale ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET swscale PROPERTY IMPORTED_LOCATION ${SWSCALE_LIB})
+    set_property(TARGET swscale PROPERTY IMPORTED_LOCATION ${SWSCALE_LIBRARY})
 
     include_directories(${AVCODEC_INCLUDE})
 endif ()

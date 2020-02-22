@@ -11,7 +11,7 @@ else ()
 endif ()
 
 find_library(
-        GFLAGS_LIB
+        GFLAGS_LIBRARY
         NAMES "gflags"
         PATHS ${GFLAGS_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
@@ -25,7 +25,7 @@ find_path(GFLAGS_INCLUDE
         NO_DEFAULT_PATH
         )
 
-find_package_handle_standard_args(gflags DEFAULT_MSG GFLAGS_INCLUDE GFLAGS_LIB)
+find_package_handle_standard_args(gflags DEFAULT_MSG GFLAGS_LIBRARY GFLAGS_INCLUDE)
 
 if (GFLAGS_FOUND)
     add_library(gflags ${SHARED_OR_STATIC} IMPORTED GLOBAL)

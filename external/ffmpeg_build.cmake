@@ -1,9 +1,7 @@
 INCLUDE(ExternalProject)
-include(ProcessorCount)
 
 set(FFMPEG_SOURCES_DIR ${THIRD_PARTY_PATH}/ffmpeg)
-set(FFMPEG_INSTALL_DIR ${THIRD_PARTY_INSTALL_PATH}/ffmpeg)
-set(FFMPEG_INCLUDE_DIR ${FFMPEG_INSTALL_DIR}/include)
+set(FFMPEG_INCLUDE_DIR ${FFMPEG_INSTALL_PATH}/include)
 
 set(FFMPEG_URL "https://ffmpeg.org/releases/ffmpeg-4.2.2.tar.bz2")
 
@@ -46,9 +44,9 @@ else()
 endif ()
 
 if (FFMPEG_USE_STATIC)
-    set(FFMPEG_STATIC_SHARED "--disable-shared")
+    set(FFMPEG_STATIC_SHARED --disable-shared)
 else ()
-    set(FFMPEG_STATIC_SHARED --enable-shared --disable-static)
+    set(FFMPEG_STATIC_SHARED --enable-shared)
 endif ()
 
 set(BUILD_CONFIG
@@ -56,7 +54,8 @@ set(BUILD_CONFIG
         --disable-debug
         --enable-runtime-cpudetect
         --disable-postproc
-        --disable-ffplay --disable-ffprobe
+        --disable-ffplay
+        --disable-ffprobe
         --disable-sdl2
         --disable-sndio
         --disable-libxcb
@@ -87,7 +86,7 @@ set(BUILD_CONFIG
 
 if (ANDROID)
     set(FFMPEG_CONFIGURE_CMD
-            ./configure --prefix=${FFMPEG_INSTALL_DIR}
+            ./configure --prefix=${FFMPEG_INSTALL_PATH}
             ${FFMPEG_STATIC_SHARED}
             ${BUILD_CONFIG}
             --target-os=android
@@ -106,7 +105,7 @@ if (ANDROID)
             )
 else ()
     set(FFMPEG_CONFIGURE_CMD
-            ./configure --prefix=${FFMPEG_INSTALL_DIR}
+            ./configure --prefix=${FFMPEG_INSTALL_PATH}
             --extra-cflags=${EXTRA_CFLAGS}
             --extra-ldflags=${EXTRA_LDFLAGS}
             ${FFMPEG_ENABLE_SHARED}

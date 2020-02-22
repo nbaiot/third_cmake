@@ -11,7 +11,7 @@ else ()
 endif ()
 
 find_library(
-        LIBUSB_LIB
+        LIBUSB_LIBRARY
         NAMES "usb-1.0"
         PATHS ${LIBUSB_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
@@ -25,11 +25,11 @@ find_path(LIBUSB_INCLUDE
         NO_DEFAULT_PATH
         )
 
-find_package_handle_standard_args(Libusb DEFAULT_MSG LIBUSB_INCLUDE LIBUSB_LIB)
+find_package_handle_standard_args(Libusb DEFAULT_MSG LIBUSB_LIBRARY LIBUSB_INCLUDE)
 
 if (LIBUSB_FOUND)
     add_library(libusb ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET libusb PROPERTY IMPORTED_LOCATION ${LIBUSB_LIB})
+    set_property(TARGET libusb PROPERTY IMPORTED_LOCATION ${LIBUSB_LIBRARY})
     include_directories(${LIBUSB_INCLUDE})
 endif ()
 

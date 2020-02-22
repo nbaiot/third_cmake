@@ -11,7 +11,7 @@ else ()
 endif ()
 
 find_library(
-        GLOG_LIB
+        GLOG_LIBRARY
         NAMES "glog"
         PATHS ${GLOG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
@@ -25,7 +25,7 @@ find_path(GLOG_INCLUDE
         NO_DEFAULT_PATH
         )
 
-find_package_handle_standard_args(glog DEFAULT_MSG GLOG_INCLUDE GLOG_LIB)
+find_package_handle_standard_args(glog DEFAULT_MSG GLOG_LIBRARY GLOG_INCLUDE)
 
 if (GLOG_FOUND)
     add_library(glog ${SHARED_OR_STATIC} IMPORTED GLOBAL)

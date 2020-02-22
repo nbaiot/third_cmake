@@ -1,5 +1,4 @@
 include(ExternalProject)
-include(ProcessorCount)
 
 ### download config
 set(BOOST_EXTERNAL "extern_boost")
@@ -11,9 +10,8 @@ endif ()
 message(STATUS "BOOST_URL: ${BOOST_URL}")
 
 ### install config
-set(BOOST_INSTALL_DIR ${THIRD_PARTY_INSTALL_PATH}/boost)
-set(BOOSTS_INCLUDE_DIR ${BOOST_INSTALL_DIR}/include)
-set(BOOST_LIBRARY_DIR ${BOOST_INSTALL_DIR}/lib)
+set(BOOSTS_INCLUDE_DIR ${BOOST_INSTALL_PATH}/include)
+set(BOOST_LIBRARY_DIR ${BOOST_INSTALL_PATH}/lib)
 
 set(BOOST_EXTERNAL_DIR ${THIRD_PARTY_PATH}/boost)
 set(BOOST_DOWNLOAD_DIR ${BOOST_EXTERNAL_DIR}/dist)
@@ -69,8 +67,6 @@ else()
     set(SEMICOLON ${CMAKE_CURRENT_LIST_DIR}/semicolon)
 endif ()
 
-ProcessorCount(CPU_COUNT)
-
 if (WIN32)
     set(BOOTSTRAP_SUFFIX .bat)
     set(B2_SUFFIX .exe)
@@ -90,7 +86,7 @@ endif ()
 
 set(BOOST_BOOTSTRAP_CMD ./bootstrap${BOOTSTRAP_SUFFIX})
 set(BOOST_BUILD_CMD ./b2${B2_SUFFIX} toolset=${CROSS_TOOLSET}
-        --prefix=${BOOST_INSTALL_DIR}
+        --prefix=${BOOST_INSTALL_PATH}
         --without-python
         --without-mpi
         --without-context
