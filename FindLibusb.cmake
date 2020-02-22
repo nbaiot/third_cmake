@@ -12,7 +12,7 @@ endif ()
 
 find_library(
         LIBUSB_LIB
-        NAMES "libusb-1.0"
+        NAMES "usb-1.0"
         PATHS ${LIBUSB_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
