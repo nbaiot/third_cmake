@@ -155,7 +155,7 @@ find_package_handle_standard_args(ffmpeg DEFAULT_MSG
         )
 
 if (FFMPEG_FOUND)
-    if (NOT TARGET fftw3)
+    if (NOT TARGET avcodec)
         add_library(avcodec ${SHARED_OR_STATIC} IMPORTED GLOBAL)
         set_property(TARGET avcodec PROPERTY IMPORTED_LOCATION ${AVCODEC_LIBRARY})
     endif ()
