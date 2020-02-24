@@ -31,6 +31,8 @@ if (LIBUSB_FOUND)
     add_library(libusb ${SHARED_OR_STATIC} IMPORTED GLOBAL)
     set_property(TARGET libusb PROPERTY IMPORTED_LOCATION ${LIBUSB_LIBRARY})
     include_directories(${LIBUSB_INCLUDE})
+    set(LIBUSB_INCLUDE_DIRS ${LIBUSB_INCLUDE})
+    set(LIBUSB_LIBRARIES ${LIBUSB_LIBRARY})
 endif ()
 
 ### restore

@@ -31,6 +31,8 @@ if (GLOG_FOUND)
     add_library(glog ${SHARED_OR_STATIC} IMPORTED GLOBAL)
     set_property(TARGET glog PROPERTY IMPORTED_LOCATION ${GLOG_LIBRARY})
     include_directories(${GLOG_INCLUDE})
+    set(GLOG_INCLUDE_DIRS ${GLOG_INCLUDE})
+    set(GLOG_LIBRARIES ${GLOG_LIBRARY})
 endif ()
 
 ### restore

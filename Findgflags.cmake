@@ -31,6 +31,8 @@ if (GFLAGS_FOUND)
     add_library(gflags ${SHARED_OR_STATIC} IMPORTED GLOBAL)
     set_property(TARGET gflags PROPERTY IMPORTED_LOCATION ${GFLAGS_LIBRARY})
     include_directories(${GFLAGS_INCLUDE})
+    set(GFLAGS_INCLUDE_DIRS ${GFLAGS_INCLUDE})
+    set(GFLAGS_LIBRARIES ${GFLAGS_LIBRARY})
 endif ()
 
 ### restore
