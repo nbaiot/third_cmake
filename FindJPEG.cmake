@@ -6,7 +6,7 @@ if (JPEG_USE_STATIC)
     set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_STATIC_LIBRARY_SUFFIX})
     set(SHARED_OR_STATIC "STATIC")
 else ()
-    set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_SHARED_LIBRARY_SUFFIX})
+    set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES_SAV})
     set(SHARED_OR_STATIC "SHARED")
 endif ()
 
@@ -22,7 +22,7 @@ find_library(
 
 unset(JPEG_INCLUDE CACHE)
 find_path(
-        JPEG_INCLUDE
+        JPEG_INCLUDE_DIR
         NAMES "turbojpeg.h"
         PATHS ${JPEG_INSTALL_PATH}
         PATH_SUFFIXES "include"
@@ -30,15 +30,15 @@ find_path(
         NO_CMAKE_FIND_ROOT_PATH
 )
 
-find_package_handle_standard_args(JPEG DEFAULT_MSG JPEG_LIBRARY JPEG_INCLUDE)
+find_package_handle_standard_args(JPEG DEFAULT_MSG JPEG_LIBRARY JPEG_INCLUDE_DIR)
 
 if (JPEG_FOUND)
     if (NOT TARGET jpeg-turbo)
         add_library(jpeg-turbo ${SHARED_OR_STATIC} IMPORTED GLOBAL)
     endif ()
     set_property(TARGET jpeg-turbo PROPERTY IMPORTED_LOCATION ${JPEG_LIBRARY})
-    include_directories(${JPEG_INCLUDE})
-    set(JPEG_INCLUDE_DIRS ${JPEG_INCLUDE})
+    include_directories(${JPEG_INCLUDE_DIR})
+    set(JPEG_INCLUDE_DIRS ${JPEG_INCLUDE_DIR})
     set(JPEG_LIBRARIES ${JPEG_LIBRARY})
 endif ()
 
