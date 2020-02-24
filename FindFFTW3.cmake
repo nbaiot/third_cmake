@@ -58,11 +58,16 @@ find_path(FFTW_INCLUDE
         )
 
 if (EXISTS ${FFTW_FLOAT_LIB})
-    add_library(fftw3f ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET fftw3 PROPERTY IMPORTED_LOCATION ${FFTW_FLOAT_LIB})
 
-    add_library(fftw3f_thread ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET fftw3f_thread PROPERTY IMPORTED_LOCATION ${FFTW_THREAD_FLOAT_LIB})
+    if (NOT TARGET fftw3f)
+        add_library(fftw3f ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+        set_property(TARGET fftw3 PROPERTY IMPORTED_LOCATION ${FFTW_FLOAT_LIB})
+    endif ()
+
+    if (NOT TARGET fftw3f_thread)
+        add_library(fftw3f_thread ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+        set_property(TARGET fftw3f_thread PROPERTY IMPORTED_LOCATION ${FFTW_THREAD_FLOAT_LIB})
+    endif ()
 
     set(FFTW3_FOUND TRUE)
     include_directories(${FFTW_INCLUDE})
@@ -71,11 +76,15 @@ else ()
 endif ()
 
 if (EXISTS ${FFTW_LIB})
-    add_library(fftw3 ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET fftw3 PROPERTY IMPORTED_LOCATION ${FFTW_LIB})
+    if (NOT TARGET fftw3)
+        add_library(fftw3 ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+        set_property(TARGET fftw3 PROPERTY IMPORTED_LOCATION ${FFTW_LIB})
+    endif ()
 
-    add_library(fftw3_thread ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-    set_property(TARGET fftw3_thread PROPERTY IMPORTED_LOCATION ${FFTW_THREAD_LIB})
+    if (NOT TARGET fftw3_thread)
+        add_library(fftw3_thread ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+        set_property(TARGET fftw3_thread PROPERTY IMPORTED_LOCATION ${FFTW_THREAD_LIB})
+    endif ()
 
     set(FFTW3_FOUND TRUE)
     include_directories(${FFTW_INCLUDE})

@@ -32,7 +32,9 @@ find_path(LIBUSB_INCLUDE
 find_package_handle_standard_args(Libusb DEFAULT_MSG LIBUSB_LIBRARY LIBUSB_INCLUDE)
 
 if (LIBUSB_FOUND)
-    add_library(libusb ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    if (NOT TARGET libusb)
+        add_library(libusb ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    endif ()
     set_property(TARGET libusb PROPERTY IMPORTED_LOCATION ${LIBUSB_LIBRARY})
     include_directories(${LIBUSB_INCLUDE})
     set(LIBUSB_INCLUDE_DIRS ${LIBUSB_INCLUDE})

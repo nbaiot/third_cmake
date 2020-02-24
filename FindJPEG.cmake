@@ -33,7 +33,9 @@ find_path(
 find_package_handle_standard_args(JPEG DEFAULT_MSG JPEG_LIBRARY JPEG_INCLUDE)
 
 if (JPEG_FOUND)
-    add_library(jpeg-turbo ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    if (NOT TARGET jpeg-turbo)
+        add_library(jpeg-turbo ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    endif ()
     set_property(TARGET jpeg-turbo PROPERTY IMPORTED_LOCATION ${JPEG_LIBRARY})
     include_directories(${JPEG_INCLUDE})
     set(JPEG_INCLUDE_DIRS ${JPEG_INCLUDE})
@@ -42,5 +44,4 @@ endif ()
 
 ### restore
 set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES_SAV})
-#set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH_SAV})
 set(SHARED_OR_STATIC)

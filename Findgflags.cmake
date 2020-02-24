@@ -32,7 +32,9 @@ find_path(GFLAGS_INCLUDE
 find_package_handle_standard_args(gflags DEFAULT_MSG GFLAGS_LIBRARY GFLAGS_INCLUDE)
 
 if (GFLAGS_FOUND)
-    add_library(gflags ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    if (NOT TARGET gflags)
+        add_library(gflags ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    endif ()
     set_property(TARGET gflags PROPERTY IMPORTED_LOCATION ${GFLAGS_LIBRARY})
     include_directories(${GFLAGS_INCLUDE})
     set(GFLAGS_INCLUDE_DIRS ${GFLAGS_INCLUDE})

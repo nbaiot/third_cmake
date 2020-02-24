@@ -32,7 +32,9 @@ find_path(GLOG_INCLUDE
 find_package_handle_standard_args(glog DEFAULT_MSG GLOG_LIBRARY GLOG_INCLUDE)
 
 if (GLOG_FOUND)
-    add_library(glog ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    if (NOT TARGET glog)
+        add_library(glog ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    endif ()
     set_property(TARGET glog PROPERTY IMPORTED_LOCATION ${GLOG_LIBRARY})
     include_directories(${GLOG_INCLUDE})
     set(GLOG_INCLUDE_DIRS ${GLOG_INCLUDE})

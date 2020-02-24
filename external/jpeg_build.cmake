@@ -53,12 +53,14 @@ else ()
     set(LIB_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX})
 endif ()
 
-set(JPEG_LIBRARIE "${JPEG_INSTALL_PATH}/lib/libjpeg-turbo${LIB_SUFFIX}" CACHE FILEPATH "JPEG_LIBRARIE" FORCE)
+set(JPEG_LIBRARY "${JPEG_INSTALL_PATH}/lib/libturbojpeg${LIB_SUFFIX}" CACHE FILEPATH "JPEG_LIBRARY" FORCE)
 
 add_library(jpeg-turbo ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-set_property(TARGET jpeg-turbo PROPERTY IMPORTED_LOCATION ${JPEG_LIBRARIE})
+set_property(TARGET jpeg-turbo PROPERTY IMPORTED_LOCATION ${JPEG_LIBRARY})
 add_dependencies(jpeg-turbo extern_jpeg-turbo)
 include_directories(${JPEG_INCLUDE_DIR})
+set(JPEG_INCLUDE_DIRS ${JPEG_INCLUDE_DIR})
+set(JPEG_LIBRARIES ${JPEG_LIBRARY})
 
 ### restore
 set(SHARED_OR_STATIC)
