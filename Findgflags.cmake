@@ -10,19 +10,23 @@ else ()
     set(SHARED_OR_STATIC "SHARED")
 endif ()
 
+unset(GFLAGS_LIBRARY CACHE)
 find_library(
         GFLAGS_LIBRARY
         NAMES "gflags"
         PATHS ${GFLAGS_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
 )
 
+unset(GFLAGS_INCLUDE CACHE)
 find_path(GFLAGS_INCLUDE
         NAMES "gflags/gflags.h"
         PATHS ${GFLAGS_INSTALL_PATH}
         PATH_SUFFIXES "include"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
         )
 
 find_package_handle_standard_args(gflags DEFAULT_MSG GFLAGS_LIBRARY GFLAGS_INCLUDE)

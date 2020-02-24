@@ -10,109 +10,137 @@ else ()
     set(SHARED_OR_STATIC "SHARED")
 endif ()
 
+unset(AVCODEC_LIBRARY CACHE)
 find_library(
         AVCODEC_LIBRARY
         NAMES "avcodec"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
 )
 
+unset(AVCODEC_INCLUDE CACHE)
 find_path(AVCODEC_INCLUDE
         NAMES "libavcodec/avcodec.h"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "include"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
         )
 
+unset(AVDEVICE_LIBRARY CACHE)
 find_library(
         AVDEVICE_LIBRARY
         NAMES "avdevice"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
 )
 
+unset(AVDEVICE_INCLUDE CACHE)
 find_path(AVDEVICE_INCLUDE
         NAMES "libavdevice/avdevice.h"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "include"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
         )
 
+unset(AVFILTER_LIBRARY CACHE)
 find_library(
         AVFILTER_LIBRARY
         NAMES "avfilter"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
 )
 
+unset(AVFILTER_INCLUDE CACHE)
 find_path(AVFILTER_INCLUDE
         NAMES "libavfilter/avfilter.h"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "include"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
         )
 
+unset(AVFORMAT_LIBRARY CACHE)
 find_library(
         AVFORMAT_LIBRARY
         NAMES "avformat"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
 )
 
+unset(AVFORMAT_INCLUDE CACHE)
 find_path(AVFORMAT_INCLUDE
         NAMES "libavformat/avformat.h"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "include"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
         )
 
+unset(AVUTIL_LIBRARY CACHE)
 find_library(
         AVUTIL_LIBRARY
         NAMES "avutil"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
 )
 
+unset(AVUTIL_INCLUDE CACHE)
 find_path(AVUTIL_INCLUDE
         NAMES "libavutil/avutil.h"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "include"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
         )
 
+unset(SWRESAMPLE_LIBRARY CACHE)
 find_library(
         SWRESAMPLE_LIBRARY
         NAMES "swresample"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
 )
 
+unset(SWRESAMPLE_INCLUDE CACHE)
 find_path(SWRESAMPLE_INCLUDE
         NAMES "libswresample/swresample.h"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "include"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
         )
 
+unset(SWSCALE_LIBRARY CACHE)
 find_library(
         SWSCALE_LIBRARY
         NAMES "swscale"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
 )
 
+unset(SWSCALE_INCLUDE CACHE)
 find_path(SWSCALE_INCLUDE
         NAMES "libswscale/swscale.h"
         PATHS ${FFMPEG_INSTALL_PATH}
         PATH_SUFFIXES "include"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
         )
 
 

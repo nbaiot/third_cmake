@@ -10,19 +10,23 @@ else ()
     set(SHARED_OR_STATIC "SHARED")
 endif ()
 
+unset(GLOG_LIBRARY CACHE)
 find_library(
         GLOG_LIBRARY
         NAMES "glog"
         PATHS ${GLOG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
 )
 
+unset(GLOG_INCLUDE CACHE)
 find_path(GLOG_INCLUDE
         NAMES "glog/logging.h"
         PATHS ${GLOG_INSTALL_PATH}
         PATH_SUFFIXES "include"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
         )
 
 find_package_handle_standard_args(glog DEFAULT_MSG GLOG_LIBRARY GLOG_INCLUDE)

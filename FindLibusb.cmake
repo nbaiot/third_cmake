@@ -10,19 +10,23 @@ else ()
     set(SHARED_OR_STATIC "SHARED")
 endif ()
 
+unset(LIBUSB_LIBRARY CACHE)
 find_library(
         LIBUSB_LIBRARY
         NAMES "usb-1.0"
         PATHS ${LIBUSB_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
 )
 
+unset(LIBUSB_INCLUDE CACHE)
 find_path(LIBUSB_INCLUDE
         NAMES "libusb-1.0/libusb.h"
         PATHS ${LIBUSB_INSTALL_PATH}
         PATH_SUFFIXES "include"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
         )
 
 find_package_handle_standard_args(Libusb DEFAULT_MSG LIBUSB_LIBRARY LIBUSB_INCLUDE)

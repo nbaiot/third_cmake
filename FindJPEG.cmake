@@ -10,20 +10,24 @@ else ()
     set(SHARED_OR_STATIC "SHARED")
 endif ()
 
+unset(JPEG_LIBRARY CACHE)
 find_library(
         JPEG_LIBRARY
         NAMES "turbojpeg"
         PATHS ${JPEG_INSTALL_PATH}
         PATH_SUFFIXES "lib" "lib64"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
 )
 
+unset(JPEG_INCLUDE CACHE)
 find_path(
         JPEG_INCLUDE
         NAMES "turbojpeg.h"
         PATHS ${JPEG_INSTALL_PATH}
         PATH_SUFFIXES "include"
         NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
 )
 
 find_package_handle_standard_args(JPEG DEFAULT_MSG JPEG_LIBRARY JPEG_INCLUDE)
@@ -38,4 +42,5 @@ endif ()
 
 ### restore
 set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES_SAV})
+#set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH_SAV})
 set(SHARED_OR_STATIC)
