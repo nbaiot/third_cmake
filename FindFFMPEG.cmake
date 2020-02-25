@@ -144,7 +144,7 @@ find_path(SWSCALE_INCLUDE
         )
 
 
-find_package_handle_standard_args(ffmpeg DEFAULT_MSG
+find_package_handle_standard_args(FFMPEG DEFAULT_MSG
         AVDEVICE_LIBRARY AVDEVICE_INCLUDE
         AVCODEC_LIBRARY AVCODEC_INCLUDE
         AVFILTER_LIBRARY AVFILTER_INCLUDE

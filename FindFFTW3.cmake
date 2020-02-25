@@ -57,11 +57,13 @@ find_path(FFTW_INCLUDE
         NO_CMAKE_FIND_ROOT_PATH
         )
 
+set(FFTW3_FOUND FALSE)
+
 if (EXISTS ${FFTW_FLOAT_LIB})
 
     if (NOT TARGET fftw3f)
         add_library(fftw3f ${SHARED_OR_STATIC} IMPORTED GLOBAL)
-        set_property(TARGET fftw3 PROPERTY IMPORTED_LOCATION ${FFTW_FLOAT_LIB})
+        set_property(TARGET fftw3f PROPERTY IMPORTED_LOCATION ${FFTW_FLOAT_LIB})
     endif ()
 
     if (NOT TARGET fftw3f_thread)
@@ -71,8 +73,6 @@ if (EXISTS ${FFTW_FLOAT_LIB})
 
     set(FFTW3_FOUND TRUE)
     include_directories(${FFTW_INCLUDE})
-else ()
-    set(FFTW3_FOUND FALSE)
 endif ()
 
 if (EXISTS ${FFTW_LIB})
@@ -88,8 +88,6 @@ if (EXISTS ${FFTW_LIB})
 
     set(FFTW3_FOUND TRUE)
     include_directories(${FFTW_INCLUDE})
-else ()
-    set(FFTW3_FOUND FALSE)
 endif ()
 
 ### restore

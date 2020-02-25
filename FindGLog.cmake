@@ -29,7 +29,7 @@ find_path(GLOG_INCLUDE
         NO_CMAKE_FIND_ROOT_PATH
         )
 
-find_package_handle_standard_args(glog DEFAULT_MSG GLOG_LIBRARY GLOG_INCLUDE)
+find_package_handle_standard_args(GLog DEFAULT_MSG GLOG_LIBRARY GLOG_INCLUDE)
 
 if (GLOG_FOUND)
     if (NOT TARGET glog)
