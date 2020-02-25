@@ -5,6 +5,7 @@ else ()
 endif ()
 
 set(LIBYUV_USE_STATIC TRUE)
+set(LIBYUV_LINK_STATIC_JPEG TRUE)
 
 find_package(Libyuv)
 

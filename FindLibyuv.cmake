@@ -30,7 +30,7 @@ find_path(
         NO_CMAKE_FIND_ROOT_PATH
 )
 
-find_package_handle_standard_args(LIBYUV DEFAULT_MSG LIBYUV_LIBRARY LIBYUV_INCLUDE)
+find_package_handle_standard_args(Libyuv DEFAULT_MSG LIBYUV_LIBRARY LIBYUV_INCLUDE)
 
 if (LIBYUV_FOUND)
     if (NOT TARGET jpeg-turbo)
