@@ -1,9 +1,5 @@
 
-if (NOT DEFINED ENV{NDK_HOME})
-    message(FATAL_ERROR ">>>>>>>>>>builde error: not defined environment variable:NDK_HOME")
-endif ()
-
-set(NDK_TOOLCHAIN $ENV{NDK_HOME}/toolchains/llvm/prebuilt/${ANDROID_HOST_TAG})
+set(NDK_TOOLCHAIN ${ANDROID_NDK}/toolchains/llvm/prebuilt/${ANDROID_HOST_TAG})
 
 set(NDK_AR ${ANDROID_TOOLCHAIN_PREFIX}ar${CMAKE_EXECUTABLE_SUFFIX})
 set(NDK_AS ${ANDROID_TOOLCHAIN_PREFIX}as${CMAKE_EXECUTABLE_SUFFIX})
