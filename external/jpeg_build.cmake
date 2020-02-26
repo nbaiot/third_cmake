@@ -3,7 +3,8 @@ include(ExternalProject)
 set(JPEG_SOURCES_DIR ${THIRD_PARTY_PATH}/jpeg-turbo)
 set(JPEG_INCLUDE_DIR ${JPEG_INSTALL_PATH}/include)
 
-set(JPEG_URL "https://cfhcable.dl.sourceforge.net/project/libjpeg-turbo/2.0.4/libjpeg-turbo-2.0.4.tar.gz")
+set(JPEG_REPOSITORY "https://github.com/libjpeg-turbo/libjpeg-turbo.git")
+set(JPEG_TAG "2.0.4")
 
 if (ANDROID)
     set(ANDROID_ABI_ARG -DANDROID_ABI=${ANDROID_ABI})
@@ -26,7 +27,8 @@ endif()
 
 ExternalProject_Add(
         extern_jpeg-turbo
-        URL ${JPEG_URL}
+        GIT_REPOSITORY ${JPEG_REPOSITORY}
+        GIT_TAG ${JPEG_TAG}
         PREFIX ${JPEG_SOURCES_DIR}
         UPDATE_COMMAND ""
         CMAKE_ARGS
