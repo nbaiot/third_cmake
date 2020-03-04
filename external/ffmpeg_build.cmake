@@ -41,6 +41,15 @@ if (ANDROID)
 else()
     set(EXTRA_CFLAGS "-Wa,--noexecstack -fdata-sections -ffunction-sections -fstack-protector-strong")
     set(EXTRA_LDFLAGS "-Wl,--gc-sections")
+    # TODO: add cmake for these libs
+    set(FFMPEG_PLATORM_CONFIG
+            --enable-libx264
+            --enable-libx265
+            --enable-libvpx
+            --enable-libopus
+            --enable-libmp3lame
+            --enable-libfdk-aac
+            )
 endif ()
 
 if (FFMPEG_USE_STATIC)
@@ -49,7 +58,7 @@ else ()
     set(FFMPEG_STATIC_SHARED --enable-shared)
 endif ()
 
-set(BUILD_CONFIG
+set(BUILD_COMMON_CONFIG
         --disable-doc
         --disable-debug
         --enable-runtime-cpudetect
@@ -64,14 +73,6 @@ set(BUILD_CONFIG
         --enable-indev=alsa,v4l2
         --disable-outdevs
         --enable-outdev=alsa,v4l2
-        --disable-encoders
-        --enable-decoder=opus
-        --enable-decoder=aac
-        --enable-decoder=mp3
-        --disable-decoders
-        --enable-decoder=opus
-        --enable-decoder=aac
-        --enable-decoder=mp3
         --disable-filters
         --enable-filter=*fade,*fifo,*format,*resample,aeval,all*,atempo,color*,convolution,draw*,eq*,framerate,*_cuda,*v4l2*,hw*,null,scale,volume
         --enable-gpl
@@ -88,7 +89,7 @@ if (ANDROID)
     set(FFMPEG_CONFIGURE_CMD
             ./configure --prefix=${FFMPEG_INSTALL_PATH}
             ${FFMPEG_STATIC_SHARED}
-            ${BUILD_CONFIG}
+            ${BUILD_COMMON_CONFIG}
             --target-os=android
             --arch=${FFMPEG_ARCH}
             --cpu=${FFMPEG_CPU}
@@ -109,7 +110,8 @@ else ()
             --extra-cflags=${EXTRA_CFLAGS}
             --extra-ldflags=${EXTRA_LDFLAGS}
             ${FFMPEG_ENABLE_SHARED}
-            ${BUILD_CONFIG}
+            ${BUILD_COMMON_CONFIG}
+            ${FFMPEG_PLATORM_CONFIG}
             )
 endif ()
 
@@ -171,6 +173,7 @@ set_property(TARGET swscale PROPERTY IMPORTED_LOCATION ${LIBSWSCALE_LIBRARIE})
 add_dependencies(swscale extern_ffmpeg)
 
 include_directories(${FFMPEG_INCLUDE_DIR})
+set(FFMPEG_LIBS avformat avdevice avfilter avfilter avcodec swresample swscale avutil)
 
 set(SHARED_OR_STATIC)
 set(LIB_SUFFIX)
