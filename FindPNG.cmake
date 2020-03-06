@@ -1,0 +1,47 @@
+include(FindPackageHandleStandardArgs)
+
+set(CMAKE_FIND_LIBRARY_SUFFIXES_SAV ${CMAKE_FIND_LIBRARY_SUFFIXES})
+
+if (PNG_USE_STATIC)
+    set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_STATIC_LIBRARY_SUFFIX})
+    set(SHARED_OR_STATIC "STATIC")
+else ()
+    set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES_SAV})
+    set(SHARED_OR_STATIC "SHARED")
+endif ()
+
+unset(PNG_LIBRARY CACHE)
+find_library(
+        PNG_LIBRARY
+        NAMES "png"
+        PATHS ${PNG_INSTALL_PATH}
+        PATH_SUFFIXES "lib" "lib64"
+        NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
+)
+
+unset(PNG_INCLUDE CACHE)
+find_path(
+        PNG_INCLUDE_DIR
+        NAMES "png.h"
+        PATHS ${PNG_INSTALL_PATH}
+        PATH_SUFFIXES "include"
+        NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
+)
+
+find_package_handle_standard_args(PNG DEFAULT_MSG PNG_LIBRARY PNG_INCLUDE_DIR)
+
+if (PNG_FOUND)
+    if (NOT TARGET png)
+        add_library(png ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    endif ()
+    set_property(TARGET png PROPERTY IMPORTED_LOCATION ${PNG_LIBRARY})
+    include_directories(${PNG_INCLUDE_DIR})
+    set(PNG_INCLUDE_DIRS ${PNG_INCLUDE_DIR})
+    set(PNG_LIBRARIES ${PNG_LIBRARY})
+endif ()
+
+### restore
+set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES_SAV})
+set(SHARED_OR_STATIC)
