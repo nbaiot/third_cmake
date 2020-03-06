@@ -4,6 +4,7 @@ else ()
     set(PNG_INSTALL_PATH ${THIRD_PARTY_INSTALL_PATH})
 endif ()
 
+# freetype depend it
 set(PNG_USE_STATIC TRUE)
 
 find_package(PNG)
