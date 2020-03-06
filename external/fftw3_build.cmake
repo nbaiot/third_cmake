@@ -8,10 +8,11 @@ set(FFTW3_URL "http://www.fftw.org/fftw-3.3.8.tar.gz")
 set(FFTW_HOST)
 set(ENABLE_OP "--enable-threads")
 set(ENABLE_OP ${ENABLE_OP} "--enable-shared")
+set(ENABLE_OP ${ENABLE_OP} "--with-pic")
 
 set(FFTW_LIB_NAME libfftw3)
 set(FFTW_THREAD_LIB_NAME libfftw3_threads)
-set(FFTW_BUILD_CFLAGS "-fpic")
+
 if (ANDROID)
     set(LIBS "LIBS=\"-lc -lgcc\"")
     if (ARMEABI_V7A)
@@ -20,7 +21,7 @@ if (ANDROID)
         set(ENABLE_OP ${ENABLE_OP} "--enable-neon")
         set(FFTW_LIB_NAME libfftw3f)
         set(FFTW_THREAD_LIB_NAME libfftw3f_threads)
-        set(FFTW_BUILD_CFLAGS "-fpic -march=armv7-a -mfloat-abi=softfp -mfpu=neon")
+        set(FFTW_BUILD_CFLAGS "CFLAGS=-march=armv7-a -mfloat-abi=softfp -mfpu=neon")
     elseif (ARM64_V8A)
         set(FFTW_HOST aarch64-linux-android)
     elseif (X86)
@@ -65,7 +66,7 @@ ExternalProject_Add(
         COMMAND ${FFTW_CONFIGURE_CMD}
         BUILD_ALWAYS FALSE
         BUILD_COMMAND
-        COMMAND make CFLAGS=${FFTW_BUILD_CFLAGS} -j${CPU_COUNT}
+        COMMAND make ${FFTW_BUILD_CFLAGS} -j${CPU_COUNT}
         INSTALL_COMMAND make install
         BUILD_IN_SOURCE 1
 )

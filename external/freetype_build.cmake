@@ -5,12 +5,10 @@ set(FREETYPE_INCLUDE_DIR ${FREETYPE_INSTALL_PATH}/include)
 
 set(FREETYPE_URL "https://download.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.bz2")
 
-set(FREETYPE_BUILD_CFLAGS "-fpic")
-
 if (ANDROID)
     if (ARMEABI_V7A)
         set(FREETYPE_HOST armv7a-linux-androideabi)
-        set(PNG_BUILD_CFLAGS "-march=armv7-a -mfloat-abi=softfp -mfpu=neon")
+        set(PNG_BUILD_CFLAGS "CFLAGS=-march=armv7-a -mfloat-abi=softfp -mfpu=neon")
     elseif (ARM64_V8A)
         set(FREETYPE_HOST aarch64-linux-android)
     elseif (X86)
