@@ -5,11 +5,11 @@ set(PNG_INCLUDE_DIR ${PNG_INSTALL_PATH}/include)
 
 set(PNG_REPOSITORY "https://github.com/glennrp/libpng.git")
 set(PNG_TAG "v1.6.37")
-set(PNG_BUILD_CFLAGS "-fpic")
+
 if (ANDROID)
     if (ARMEABI_V7A)
         set(PNG_HOST armv7a-linux-androideabi)
-        set(PNG_BUILD_CFLAGS "-fpic -march=armv7-a -mfloat-abi=softfp -mfpu=neon")
+        set(PNG_BUILD_CFLAGS "CFLAGS=-march=armv7-a -mfloat-abi=softfp -mfpu=neon")
     elseif (ARM64_V8A)
         set(PNG_HOST aarch64-linux-android)
     elseif (X86)
@@ -55,7 +55,7 @@ ExternalProject_Add(
         COMMAND ${PNG_CONFIGURE_CMD}
         BUILD_ALWAYS FALSE
         BUILD_COMMAND
-        COMMAND make CFLAGS=${FFTW_BUILD_CFLAGS} -j${CPU_COUNT}
+        COMMAND make ${PNG_BUILD_CFLAGS} -j${CPU_COUNT}
         INSTALL_COMMAND make install
         BUILD_IN_SOURCE 1
 )
