@@ -1,0 +1,21 @@
+--- a/source/CMakeLists.txt
++++ b/source/CMakeLists.txt
+@@ -79,7 +79,17 @@ else()
+ endif()
+
+ if(UNIX)
+-    list(APPEND PLATFORM_LIBS pthread)
++    if(NOT ANDROID)
++        list(APPEND PLATFORM_LIBS pthread)
++    endif()
++    if(ARMEABI_V7A)
++            set(ARM_ARGS -march=armv7-a -mfloat-abi=softfp -mfpu=neon -fPIC)
++            add_definitions(-DHAVE_NEON)
++            add_definitions(${ARM_ARGS})
++    elseif(ARM64_V8A)
++            add_definitions(-DHAVE_NEON)
++            add_definitions(${ARM_ARGS})
++    endif()
+     find_library(LIBRT rt)
+     if(LIBRT)
+         list(APPEND PLATFORM_LIBS rt)
