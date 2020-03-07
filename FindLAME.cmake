@@ -1,0 +1,47 @@
+include(FindPackageHandleStandardArgs)
+
+set(CMAKE_FIND_LIBRARY_SUFFIXES_SAV ${CMAKE_FIND_LIBRARY_SUFFIXES})
+
+if (LAME_USE_STATIC)
+    set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_STATIC_LIBRARY_SUFFIX})
+    set(SHARED_OR_STATIC "STATIC")
+else ()
+    set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES_SAV})
+    set(SHARED_OR_STATIC "SHARED")
+endif ()
+
+unset(LAME_LIBRARY CACHE)
+find_library(
+        LAME_LIBRARY
+        NAMES "mp3lame"
+        PATHS ${LAME_INSTALL_PATH}
+        PATH_SUFFIXES "lib" "lib64"
+        NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
+)
+
+unset(LAME_INCLUDE CACHE)
+find_path(
+        LAME_INCLUDE_DIR
+        NAMES "lame/lame.h"
+        PATHS ${LAME_INSTALL_PATH}
+        PATH_SUFFIXES "include"
+        NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
+)
+
+find_package_handle_standard_args(LAME DEFAULT_MSG LAME_LIBRARY LAME_INCLUDE_DIR)
+
+if (LAME_FOUND)
+    if (NOT TARGET lame)
+        add_library(lame ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    endif ()
+    set_property(TARGET lame PROPERTY IMPORTED_LOCATION ${LAME_LIBRARY})
+    include_directories(${LAME_INCLUDE_DIR})
+    set(LAME_INCLUDE_DIRS ${LAME_INCLUDE_DIR})
+    set(LAME_LIBRARIES ${LAME_LIBRARY})
+endif ()
+
+### restore
+set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES_SAV})
+set(SHARED_OR_STATIC)
