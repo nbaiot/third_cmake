@@ -1,0 +1,29 @@
+--- a/libSBRdec/src/lpp_tran.cpp
++++ b/libSBRdec/src/lpp_tran.cpp
+
+@@ -119,7 +119,7 @@ amm-info@iis.fraunhofer.de
+ */
+
+ #ifdef __ANDROID__
+-#include "log/log.h"
++//#include "log/log.h"
+ #endif
+
+ #include "lpp_tran.h"
+@@ -339,7 +339,7 @@ void lppTransposer(
+ #ifdef __ANDROID__
+   else {
+     // Safetynet logging
+-    android_errorWriteLog(0x534e4554, "112160868");
++    //android_errorWriteLog(0x534e4554, "112160868");
+   }
+ #endif
+
+@@ -919,7 +919,7 @@ void lppTransposerHBE(
+ #ifdef __ANDROID__
+   else {
+     // Safetynet logging
+-    android_errorWriteLog(0x534e4554, "112160868");
++    //android_errorWriteLog(0x534e4554, "112160868");
+   }
+ #endif
