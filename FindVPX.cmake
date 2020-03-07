@@ -1,0 +1,47 @@
+include(FindPackageHandleStandardArgs)
+
+set(CMAKE_FIND_LIBRARY_SUFFIXES_SAV ${CMAKE_FIND_LIBRARY_SUFFIXES})
+
+if (VPX_USE_STATIC)
+    set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_STATIC_LIBRARY_SUFFIX})
+    set(SHARED_OR_STATIC "STATIC")
+else ()
+    set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES_SAV})
+    set(SHARED_OR_STATIC "SHARED")
+endif ()
+
+unset(VPX_LIBRARY CACHE)
+find_library(
+        VPX_LIBRARY
+        NAMES "vpx"
+        PATHS ${VPX_INSTALL_PATH}
+        PATH_SUFFIXES "lib" "lib64"
+        NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
+)
+
+unset(VPX_INCLUDE CACHE)
+find_path(
+        VPX_INCLUDE_DIR
+        NAMES "vpx"
+        PATHS ${VPX_INSTALL_PATH}
+        PATH_SUFFIXES "include"
+        NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
+)
+
+find_package_handle_standard_args(VPX DEFAULT_MSG VPX_LIBRARY VPX_INCLUDE_DIR)
+
+if (VPX_FOUND)
+    if (NOT TARGET vpx)
+        add_library(vpx ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    endif ()
+    set_property(TARGET vpx PROPERTY IMPORTED_LOCATION ${VPX_LIBRARY})
+    include_directories(${VPX_INCLUDE_DIR})
+    set(VPX_INCLUDE_DIRS ${VPX_INCLUDE_DIR})
+    set(VPX_LIBRARIES ${VPX_LIBRARY})
+endif ()
+
+### restore
+set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES_SAV})
+set(SHARED_OR_STATIC)
