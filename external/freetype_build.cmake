@@ -40,6 +40,7 @@ else ()
             LIBPNG_LIBS=${PNG_LIBRARY}
             --prefix=${FREETYPE_INSTALL_PATH}
             --with-pic
+            --with-harfbuzz=no
             )
 endif ()
 

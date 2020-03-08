@@ -5,8 +5,6 @@ set(FFMPEG_INCLUDE_DIR ${FFMPEG_INSTALL_PATH}/include)
 
 set(FFMPEG_URL "https://ffmpeg.org/releases/ffmpeg-4.2.2.tar.bz2")
 
-
-
 if (ANDROID)
     if (ARMEABI_V7A)
         set(FFMPEG_ARCH arm)
@@ -38,25 +36,15 @@ if (ANDROID)
         enable_language(ASM_NASM)
     endif ()
     set(EXTRA_LDFLAGS "-Wl,-z,relro -Wl,-z,now -pie -fPIE")
+    set(EXTRA_LB "-l:libpng.a -lz -lm -lstdc++")
 else()
     set(EXTRA_CFLAGS "-Wa,--noexecstack -fdata-sections -ffunction-sections -fstack-protector-strong")
     set(EXTRA_LDFLAGS "-Wl,--gc-sections")
-    # TODO: add cmake for these libs
-    set(FFMPEG_PLATORM_CONFIG
-            --enable-libx264
-            --enable-libx265
-            --enable-libvpx
-            --enable-libopus
-            --enable-libmp3lame
-            --enable-libfdk-aac
-            )
+    set(EXTRA_LB "-lpng -lz -lm -lpthread -lstdc++")
+
 endif ()
 
-if (FFMPEG_USE_STATIC)
-    set(FFMPEG_STATIC_SHARED --disable-shared)
-else ()
-    set(FFMPEG_STATIC_SHARED --enable-shared)
-endif ()
+set(FFMPEG_ENABLE_SHARED --enable-shared)
 
 set(BUILD_COMMON_CONFIG
         --disable-doc
@@ -82,14 +70,26 @@ set(BUILD_COMMON_CONFIG
         --disable-avresample
         --enable-yasm
         --enable-pthreads
-#       --pkg-config
+        --enable-libx264
+        --enable-libx265
+        --enable-libvpx
+        --enable-libopus
+        --enable-libmp3lame
+        --enable-libfdk-aac
+        --enable-libfreetype
+        --extra-libs=${EXTRA_LB}
         )
+
+set(EXTRA_CFLAGS  "${EXTRA_CFLAGS} -I${THIRD_PARTY_PATH}/include")
+set(EXTRA_LDFLAGS  "${EXTRA_LDFLAGS} -L${THIRD_PARTY_PATH}/lib")
+set(FFMPEG_PKG_CONFIG ${THIRD_PARTY_INSTALL_PATH}/lib/pkgconfig)
 
 if (ANDROID)
     set(FFMPEG_CONFIGURE_CMD
+            PKG_CONFIG_PATH=${FFMPEG_PKG_CONFIG}
             ./configure --prefix=${FFMPEG_INSTALL_PATH}
-            ${FFMPEG_STATIC_SHARED}
-            ${BUILD_COMMON_CONFIG}
+            --extra-cflags=${EXTRA_CFLAGS}
+            --extra-ldflags=${EXTRA_LDFLAGS}
             --target-os=android
             --arch=${FFMPEG_ARCH}
             --cpu=${FFMPEG_CPU}
@@ -103,28 +103,34 @@ if (ANDROID)
             --cc=${NDK_CC}
             --cxx=${NDK_CXX}
             --sysroot=${NDK_SYS_ROOT}
+            --pkg-config=/usr/bin/pkg-config
+#            ${FFMPEG_ENABLE_SHARED}
+            ${BUILD_COMMON_CONFIG}
             )
 else ()
+    message(">>>>>>>>>>>>>>>>>>>>>>>>>FFMPEG_PKG_CONFIG:${FFMPEG_PKG_CONFIG}")
     set(FFMPEG_CONFIGURE_CMD
+            PKG_CONFIG_PATH=${FFMPEG_PKG_CONFIG}
             ./configure --prefix=${FFMPEG_INSTALL_PATH}
             --extra-cflags=${EXTRA_CFLAGS}
             --extra-ldflags=${EXTRA_LDFLAGS}
+            --pkg-config=/usr/bin/pkg-config
             ${FFMPEG_ENABLE_SHARED}
             ${BUILD_COMMON_CONFIG}
-            ${FFMPEG_PLATORM_CONFIG}
             )
 endif ()
 
 ExternalProject_Add(
         extern_ffmpeg
+        DEPENDS x264 x265 vpx freetype fdk-aac lame opus
         URL ${FFMPEG_URL}
         PREFIX ${FFMPEG_SOURCES_DIR}
         CONFIGURE_COMMAND
         COMMAND ${FFMPEG_CONFIGURE_CMD}
-        BUILD_ALWAYS FALSE
+        BUILD_ALWAYS TRUE
         BUILD_COMMAND
         COMMAND make -j${CPU_COUNT}
-        INSTALL_COMMAND make install
+        INSTALL_COMMAND  make install
         BUILD_IN_SOURCE 1
 
 )

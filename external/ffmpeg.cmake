@@ -4,6 +4,8 @@ else ()
     set(FFMPEG_INSTALL_PATH ${THIRD_PARTY_INSTALL_PATH})
 endif ()
 
+# depend png x264 x265 vpx freetrype fdk-aac lame
+# THIRD_PARTY_INDEPENDENT_INSTALL should be false
 set(FFMPEG_USE_STATIC TRUE)
 
 find_package(FFMPEG)
