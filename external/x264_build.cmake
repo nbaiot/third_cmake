@@ -8,7 +8,6 @@ set(X264_URL "http://download.videolan.org/x264/snapshots/x264-snapshot-20191217
 if (ANDROID)
     if (ARMEABI_V7A)
         set(X264_HOST armv7a-linux-androideabi)
-        set(X264_BUILD_CFLAGS "CFLAGS=-march=armv7-a -mfloat-abi=softfp -mfpu=neon")
     elseif (ARM64_V8A)
         set(X264_HOST aarch64-linux-android)
     elseif (X86)
@@ -49,9 +48,9 @@ ExternalProject_Add(
         UPDATE_COMMAND ""
         CONFIGURE_COMMAND
         COMMAND ${X264_CONFIGURE_CMD}
-        BUILD_ALWAYS FALSE
+        BUILD_ALWAYS TRUE
         BUILD_COMMAND
-        COMMAND make ${X264_BUILD_CFLAGS} -j${CPU_COUNT}
+        COMMAND make -j${CPU_COUNT}
         INSTALL_COMMAND make install
         BUILD_IN_SOURCE 1
 )

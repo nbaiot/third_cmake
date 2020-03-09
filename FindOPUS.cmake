@@ -33,10 +33,10 @@ find_path(
 find_package_handle_standard_args(OPUS DEFAULT_MSG OPUS_LIBRARY OPUS_INCLUDE_DIR)
 
 if (OPUS_FOUND)
-    if (NOT TARGET png)
-        add_library(png ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    if (NOT TARGET opus)
+        add_library(opus ${SHARED_OR_STATIC} IMPORTED GLOBAL)
     endif ()
-    set_property(TARGET png PROPERTY IMPORTED_LOCATION ${OPUS_LIBRARY})
+    set_property(TARGET opus PROPERTY IMPORTED_LOCATION ${OPUS_LIBRARY})
     include_directories(${OPUS_INCLUDE_DIR})
     set(OPUS_INCLUDE_DIRS ${OPUS_INCLUDE_DIR})
     set(OPUS_LIBRARIES ${OPUS_LIBRARY})

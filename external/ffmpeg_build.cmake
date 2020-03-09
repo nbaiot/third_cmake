@@ -80,8 +80,8 @@ set(BUILD_COMMON_CONFIG
         --extra-libs=${EXTRA_LB}
         )
 
-set(EXTRA_CFLAGS  "${EXTRA_CFLAGS} -I${THIRD_PARTY_PATH}/include")
-set(EXTRA_LDFLAGS  "${EXTRA_LDFLAGS} -L${THIRD_PARTY_PATH}/lib")
+set(EXTRA_CFLAGS  "${EXTRA_CFLAGS} -I${THIRD_PARTY_INSTALL_PATH}/include")
+set(EXTRA_LDFLAGS  "${EXTRA_LDFLAGS} -L${THIRD_PARTY_INSTALL_PATH}/lib")
 set(FFMPEG_PKG_CONFIG ${THIRD_PARTY_INSTALL_PATH}/lib/pkgconfig)
 
 if (ANDROID)
@@ -108,7 +108,6 @@ if (ANDROID)
             ${BUILD_COMMON_CONFIG}
             )
 else ()
-    message(">>>>>>>>>>>>>>>>>>>>>>>>>FFMPEG_PKG_CONFIG:${FFMPEG_PKG_CONFIG}")
     set(FFMPEG_CONFIGURE_CMD
             PKG_CONFIG_PATH=${FFMPEG_PKG_CONFIG}
             ./configure --prefix=${FFMPEG_INSTALL_PATH}
