@@ -23,7 +23,7 @@ if (NOT CMAKE_CXX_STANDARD)
 endif()
 
 ### recommend quick replace widgets
-find_package(Qt5 COMPONENTS Core Gui Qml Quick LinguistTools REQUIRED)
+find_package(Qt5 COMPONENTS Core Gui Qml Quick Multimedia LinguistTools REQUIRED)
 
 if (Qt5Core_FOUND)
     message(STATUS "Qt5Core:${Qt5Core_VERSION}")
@@ -39,6 +39,10 @@ endif()
 
 if (Qt5Quick_FOUND)
     message(STATUS "Qt5Quick:${Qt5Quick_VERSION}")
+endif()
+
+if (Qt5Multimedia_FOUND)
+    message(STATUS "Qt5LinguistTools:${Qt5Multimedia_VERSION}")
 endif()
 
 if (Qt5LinguistTools_FOUND)

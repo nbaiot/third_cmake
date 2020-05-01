@@ -10,8 +10,10 @@ if (ANDROID)
     if (ARMEABI_V7A)
         set(PNG_HOST armv7a-linux-androideabi)
         set(PNG_BUILD_CFLAGS "CFLAGS=-march=armv7-a -mfloat-abi=softfp -mfpu=neon")
+        set(PNG_ENABLE_NEON "--enable-arm-neon")
     elseif (ARM64_V8A)
         set(PNG_HOST aarch64-linux-android)
+        set(PNG_ENABLE_NEON "--enable-arm-neon")
     elseif (X86)
         set(PNG_HOST i686-linux-android)
     else (X86_64)
@@ -33,7 +35,7 @@ if (ANDROID)
             --prefix=${PNG_INSTALL_PATH}
             --with-sysroot=${NDK_SYS_ROOT}
             --with-pic
-            --enable-arm-neon
+            ${PNG_ENABLE_NEON}
             --enable-hardware-optimizations
             )
 else ()

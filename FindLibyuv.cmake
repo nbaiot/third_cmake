@@ -33,10 +33,10 @@ find_path(
 find_package_handle_standard_args(Libyuv DEFAULT_MSG LIBYUV_LIBRARY LIBYUV_INCLUDE)
 
 if (LIBYUV_FOUND)
-    if (NOT TARGET jpeg-turbo)
-        add_library(jpeg-turbo ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    if (NOT TARGET libyuv)
+        add_library(libyuv ${SHARED_OR_STATIC} IMPORTED GLOBAL)
     endif ()
-    set_property(TARGET jpeg-turbo PROPERTY IMPORTED_LOCATION ${LIBYUV_LIBRARY})
+    set_property(TARGET libyuv PROPERTY IMPORTED_LOCATION ${LIBYUV_LIBRARY})
     include_directories(${LIBYUV_INCLUDE})
     set(LIBYUV_INCLUDE_DIRS ${LIBYUV_INCLUDE})
     set(LIBYUV_LIBRARIES ${LIBYUV_LIBRARY})

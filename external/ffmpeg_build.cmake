@@ -32,7 +32,7 @@ if (ANDROID)
         set(FFMPEG_ARCH x86_64)
         set(FFMPEG_CPU x86_64)
         set(EXTRA_CFLAGS "-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -fno-strict-overflow -fstack-protector-all \
-                          -march=x86_64 -msse4.2 -mpopcnt -m64 -mtune=intel")
+                          -march=x86-64 -msse4.2 -mpopcnt -m64 -mtune=intel")
         enable_language(ASM_NASM)
     endif ()
     set(EXTRA_LDFLAGS "-Wl,-z,relro -Wl,-z,now -pie -fPIE")
@@ -121,7 +121,7 @@ endif ()
 
 ExternalProject_Add(
         extern_ffmpeg
-        DEPENDS x264 x265 vpx freetype fdk-aac lame opus
+        DEPENDS x264 x265 vpx freetype fdk-aac lame opus png
         URL ${FFMPEG_URL}
         PREFIX ${FFMPEG_SOURCES_DIR}
         CONFIGURE_COMMAND
