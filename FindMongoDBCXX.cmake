@@ -1,0 +1,76 @@
+include(FindPackageHandleStandardArgs)
+
+set(CMAKE_FIND_LIBRARY_SUFFIXES_SAV ${CMAKE_FIND_LIBRARY_SUFFIXES})
+
+if (MONGODBCXX_USE_STATIC)
+    set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_STATIC_LIBRARY_SUFFIX})
+    set(SHARED_OR_STATIC "STATIC")
+    set(MONGODBCXX_NAME "mongocxx-static")
+    set(BSONCXX_NAME "bsoncxx-static")
+else ()
+    set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES_SAV})
+    set(SHARED_OR_STATIC "SHARED")
+    set(MONGODBCXX_NAME "mongocxx")
+    set(BSONCXX_NAME "bsoncxx")
+endif ()
+
+unset(MONGODBCXX_LIBRARY CACHE)
+find_library(
+        MONGODBCXX_LIBRARY
+        NAMES ${MONGODBCXX_NAME}
+        PATHS ${MONGODBCXX_INSTALL_PATH}
+        PATH_SUFFIXES "lib" "lib64"
+        NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
+)
+
+unset(BSONCXX_LIBRARY CACHE)
+find_library(
+        BSONCXX_LIBRARY
+        NAMES ${BSONCXX_NAME}
+        PATHS ${MONGODBCXX_INSTALL_PATH}
+        PATH_SUFFIXES "lib" "lib64"
+        NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
+)
+
+unset(MONGODBCXX_INCLUDE CACHE)
+find_path(MONGODBCXX_INCLUDE
+        NAMES "mongocxx/v_noabi"
+        PATHS ${MONGODBCXX_INSTALL_PATH}
+        PATH_SUFFIXES "include"
+        NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
+        )
+
+unset(BSONCXX_INCLUDE CACHE)
+find_path(BSONCXX_INCLUDE
+        NAMES "bsoncxx/v_noabi"
+        PATHS ${MONGODBCXX_INSTALL_PATH}
+        PATH_SUFFIXES "include"
+        NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
+        )
+
+find_package_handle_standard_args(MongoDBCXX DEFAULT_MSG MONGODBCXX_LIBRARY BSONCXX_LIBRARY MONGODBCXX_INCLUDE BSONCXX_INCLUDE)
+
+if (MONGODBCXX_FOUND)
+    if (NOT TARGET mongodbcxx)
+        add_library(mongodbcxx ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    endif ()
+    if (NOT TARGET bsoncxx)
+        add_library(bsoncxx ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    endif ()
+    set_property(TARGET mongodbcxx PROPERTY IMPORTED_LOCATION ${MONGODBCXX_LIBRARY})
+    set_property(TARGET bsoncxx PROPERTY IMPORTED_LOCATION ${BSONCXX_LIBRARY})
+    include_directories(${MONGODBCXX_INCLUDE}/mongocxx/v_noabi)
+    include_directories(${BSONCXX_INCLUDE}/bsoncxx/v_noabi)
+    set(MONGODBCXX_INCLUDE_DIRS ${MONGODBCXX_INCLUDE}/mongocxx/v_noabi)
+    set(MONGODBCXX_LIBRARIES ${BSONCXX_LIBRARY})
+    set(BSONCXX_INCLUDE_DIRS ${BSONCXX_INCLUDE}/bsoncxx/v_noabi)
+    set(BSONCXX_LIBRARIES ${MONGODBCXX_LIBRARY})
+endif ()
+
+### restore
+set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES_SAV})
+set(SHARED_OR_STATIC)
