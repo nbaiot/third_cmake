@@ -1,0 +1,46 @@
+include(FindPackageHandleStandardArgs)
+
+set(CMAKE_FIND_LIBRARY_SUFFIXES_SAV ${CMAKE_FIND_LIBRARY_SUFFIXES})
+
+if (ZSTD_USE_STATIC)
+    set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_STATIC_LIBRARY_SUFFIX})
+    set(SHARED_OR_STATIC "STATIC")
+else ()
+    set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES_SAV})
+    set(SHARED_OR_STATIC "SHARED")
+endif ()
+
+unset(ZSTD_LIBRARY CACHE)
+find_library(
+        ZSTD_LIBRARY
+        NAMES "zstd"
+        PATHS ${ZSTD_INSTALL_PATH}
+        PATH_SUFFIXES "lib" "lib64"
+        NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
+)
+
+unset(ZSTD_INCLUDE CACHE)
+find_path(ZSTD_INCLUDE
+        NAMES "zstd.h"
+        PATHS ${ZSTD_INSTALL_PATH}
+        PATH_SUFFIXES "include"
+        NO_DEFAULT_PATH
+        NO_CMAKE_FIND_ROOT_PATH
+        )
+
+find_package_handle_standard_args(Zstd DEFAULT_MSG ZSTD_LIBRARY ZSTD_INCLUDE)
+
+if (ZSTD_FOUND)
+    if (NOT TARGET zstd)
+        add_library(zstd ${SHARED_OR_STATIC} IMPORTED GLOBAL)
+    endif ()
+    set_property(TARGET zstd PROPERTY IMPORTED_LOCATION ${ZSTD_LIBRARY})
+    include_directories(${ZSTD_INCLUDE})
+    set(ZSTD_INCLUDE_DIRS ${ZSTD_INCLUDE})
+    set(ZSTD_LIBRARIES ${ZSTD_LIBRARY})
+endif ()
+
+### restore
+set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES_SAV})
+set(SHARED_OR_STATIC)
