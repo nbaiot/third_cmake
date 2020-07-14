@@ -4,7 +4,7 @@ else ()
     set(GFLAGS_INSTALL_PATH ${THIRD_PARTY_INSTALL_PATH})
 endif ()
 
-set(GFLAGS_USE_STATIC TRUE)
+set(GFLAGS_USE_STATIC FALSE)
 
 find_package(gflags)
 

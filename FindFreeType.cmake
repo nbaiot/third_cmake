@@ -30,7 +30,7 @@ find_path(
         NO_CMAKE_FIND_ROOT_PATH
 )
 
-find_package_handle_standard_args(FREETYPE DEFAULT_MSG FREETYPE_LIBRARY FREETYPE_INCLUDE_DIR)
+find_package_handle_standard_args(FreeType DEFAULT_MSG FREETYPE_LIBRARY FREETYPE_INCLUDE_DIR)
 
 if (FREETYPE_FOUND)
     if (NOT TARGET freetype)
