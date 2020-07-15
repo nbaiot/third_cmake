@@ -191,7 +191,7 @@ if (FFMPEG_FOUND)
     endif ()
 
     include_directories(${AVCODEC_INCLUDE})
-    set(FFMPEG_LIBS avformat avdevice avfilter avfilter avcodec swresample swscale avutil)
+    set(FFMPEG_LIBS avformat avdevice avfilter avcodec swresample swscale avutil)
 endif ()
 
 ### restore
