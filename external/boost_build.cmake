@@ -3,9 +3,9 @@ include(ExternalProject)
 ### download config
 set(BOOST_EXTERNAL "extern_boost")
 if (WIN32)
-    set(BOOST_URL "https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.zip")
+    set(BOOST_URL "https://dl.bintray.com/boostorg/release/1.74.0/source/boost_1_74_0.zip")
 else ()
-    set(BOOST_URL "https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.bz2")
+    set(BOOST_URL "https://dl.bintray.com/boostorg/release/1.74.0/source/boost_1_74_0.tar.bz2")
 endif ()
 message(STATUS "BOOST_URL: ${BOOST_URL}")
 
